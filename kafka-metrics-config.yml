@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-metrics
+  namespace: kafka
+data:
+  kafka-metrics-config.yml: |
+    lowercaseOutputName: true
+    rules:
+    - pattern: "kafka.server<type=(.+), name=(.+)><>(Count)"
+      name: "kafka_server_$1_$2_count"
+      type: GAUGE
+      labels:
+        instance: "$0"
+    # Add more rules here as needed
